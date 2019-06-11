@@ -6,6 +6,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 
 public class Main extends Application {
 
@@ -17,6 +21,11 @@ public class Main extends Application {
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
 
+    }
+
+    static public String returnTodayDate(){
+        DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        return formatter.format(Calendar.getInstance().getTime());
     }
 
 
