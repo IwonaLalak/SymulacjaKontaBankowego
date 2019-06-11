@@ -70,13 +70,13 @@
                         <TextField layoutX="521.0" layoutY="475.0" prefHeight="28.0" prefWidth="281.0" />
                         <Label layoutX="521.0" layoutY="448.0" text="Opis" />
                         <Button layoutX="1003.0" layoutY="475.0" mnemonicParsing="false" text="Wykonaj przelew" textFill="#173afc" />
-                        <TextField layoutX="28.0" layoutY="640.0" />
-                        <Label layoutX="28.0" layoutY="613.0" text="Kwota" />
-                        <Button layoutX="210.0" layoutY="640.0" mnemonicParsing="false" text="Wykonaj symulację" textFill="#173afc" />
-                        <TextField layoutX="547.0" layoutY="640.0"  fx:id="inputOsobistePrzelew" />
+                        <TextField layoutX="28.0" layoutY="640.0" fx:id="inputOsobisteWyplata"/>
+                        <Label layoutX="28.0" layoutY="613.0" text="Kwota"/>
+                        <Button layoutX="210.0" layoutY="640.0" mnemonicParsing="false" text="Wykonaj symulację" textFill="#173afc" onMouseClicked="#onClickWplacZOsobistego" />
+                        <TextField layoutX="547.0" layoutY="640.0"  fx:id="inputOsobistePrzelewPrzychodzacy" />
                         <Label layoutX="547.0" layoutY="613.0" text="Kwota"/>
                         <Button layoutX="729.0" layoutY="640.0" mnemonicParsing="false" text="Wykonaj symulację" textFill="#173afc" onMouseClicked="#onClickPrzelejNaOsobiste"/>
-                        <TextField layoutX="820.0" layoutY="475.0" />
+                        <TextField layoutX="820.0" layoutY="475.0" text="kwota przelew"/>
                         <Label layoutX="820.0" layoutY="448.0" text="Kwota"/>
                      </children>
                   </AnchorPane>

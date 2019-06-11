@@ -21,7 +21,8 @@ public class Controller {
     /*osobiste*/
 
     @FXML private Label saldoOsobiste;
-    @FXML private TextField inputOsobistePrzelew;
+    @FXML private TextField inputOsobistePrzelewPrzychodzacy;
+    @FXML private TextField inputOsobisteWyplata;
 
     @FXML public TableView<Operacja> tableOsobiste;
     @FXML public TableColumn<Operacja,String> colOsobisteData;
@@ -58,10 +59,20 @@ public class Controller {
 
     public void onClickPrzelejNaOsobiste(){
 
-        double kwota = Double.parseDouble(inputOsobistePrzelew.getText().replace(",","."));
+        double kwota = Double.parseDouble(inputOsobistePrzelewPrzychodzacy.getText().replace(",","."));
 
         if(kwota >0){
             bankomatFacade.wplac(E_KontoType.OSOBISTE_KONTO, kwota);
+            this.odswiezSaldoKonta(E_KontoType.OSOBISTE_KONTO);
+            this.odswiezOperacje(E_KontoType.OSOBISTE_KONTO);
+        }
+    }
+
+
+    public void onClickWplacZOsobistego(){
+        double kwota = Double.parseDouble(inputOsobisteWyplata.getText().replace(",","."));
+        if(kwota>0){
+            bankomatFacade.wyplac(E_KontoType.OSOBISTE_KONTO,kwota);
             this.odswiezSaldoKonta(E_KontoType.OSOBISTE_KONTO);
             this.odswiezOperacje(E_KontoType.OSOBISTE_KONTO);
         }

@@ -36,6 +36,32 @@ public class BankomatFacade implements BankomatFacadeInterface {
     }
 
     @Override
+    public void wyplac(E_KontoType typKonta, double kwota) {
+        if(typKonta == E_KontoType.OSOBISTE_KONTO){
+            kontoOsobiste.wybierz(kwota);
+        }
+        else if(typKonta == E_KontoType.FIRMOWE_KONTO){
+            kontoFirmowe.wybierz(kwota);
+        }
+        else{
+            kontoOszczednosciowe.wybierz(kwota);
+        }
+    }
+
+    @Override
+    public void zrobPrzelew(E_KontoType typKonta, double kwota, String data, String odbiorca, String opis) {
+        if(typKonta == E_KontoType.OSOBISTE_KONTO){
+            kontoOsobiste.zrobPrzelew(kwota,data,odbiorca,opis);
+        }
+        else if(typKonta == E_KontoType.FIRMOWE_KONTO){
+            kontoFirmowe.zrobPrzelew(kwota,data,odbiorca,opis);
+        }
+        else{
+            kontoOszczednosciowe.zrobPrzelew(kwota,data,odbiorca,opis);
+        }
+    }
+
+    @Override
     public void wyswietlInformacje(E_KontoType typKonta) {
 
         ArrayList<Operacja> operacje;
