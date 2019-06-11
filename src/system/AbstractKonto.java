@@ -31,7 +31,7 @@ abstract class AbstractKonto implements I_AbstractKonto{
    @Override
    public void wplac(double kwota){
        this.stanKonta = this.stanKonta + kwota;
-       this.dodajOperacje(kwota, "PRZYCHÓD","Przykładowa firma 3421 0340 0000 3842", "Wpłata na konto",Main.returnTodayDate());
+       this.dodajOperacje(kwota, "PRZYCHÓD","-", "Wpłata na konto",Main.returnTodayDate());
    }
 
    @Override
