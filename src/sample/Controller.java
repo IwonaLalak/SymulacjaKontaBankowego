@@ -54,7 +54,7 @@ public class Controller {
     public TableColumn<Operacja, String> colOsobisteOpis;
 
 
-    /*firmowe*/
+    /*Oszczednosciowe*/
     @FXML
     private Label saldoFirmowe;
 
@@ -85,6 +85,38 @@ public class Controller {
     @FXML
     public TableColumn<Operacja, String> colFirmoweOpis;
 
+    /*oszczednosciowe*/
+
+    @FXML
+    private Label saldoOszczednosciowe;
+
+    @FXML
+    private TextField inputOszczednosciowePrzelewOdbiorca;
+    @FXML
+    private DatePicker inputOszczednosciowePrzelewData;
+    @FXML
+    private TextField inputOszczednosciowePrzelewOpis;
+    @FXML
+    private TextField inputOszczednosciowePrzelewKwota;
+
+    @FXML
+    private TextField inputOszczednosciowePrzelewPrzychodzacy;
+    @FXML
+    private TextField inputOszczednoscioweWyplata;
+
+    @FXML
+    public TableView<Operacja> tableOszczednosciowe;
+    @FXML
+    public TableColumn<Operacja, String> colOszczednoscioweData;
+    @FXML
+    public TableColumn<Operacja, String> colOszczednoscioweTyp;
+    @FXML
+    public TableColumn<Operacja, String> colOszczednoscioweNadawca;
+    @FXML
+    public TableColumn<Operacja, Double> colOszczednoscioweKwota;
+    @FXML
+    public TableColumn<Operacja, String> colOszczednoscioweOpis;
+
 
 
     public void odswiezSaldoKonta(E_KontoType konto) {
@@ -94,6 +126,10 @@ public class Controller {
         else if(konto.equals(E_KontoType.FIRMOWE_KONTO)){
             saldoFirmowe.setText(Double.toString(bankomatFacade.zwrocSaldo(E_KontoType.FIRMOWE_KONTO)) + " zł");
         }
+        else if(konto.equals(E_KontoType.OSZCZEDNOSCIOWE_KONTO)){
+            saldoOszczednosciowe.setText(Double.toString(bankomatFacade.zwrocSaldo(E_KontoType.OSZCZEDNOSCIOWE_KONTO)) + " zł");
+        }
+
     }
 
     public void odswiezOperacje(E_KontoType konto) {
@@ -125,6 +161,20 @@ public class Controller {
             colFirmoweKwota.setCellValueFactory(new PropertyValueFactory<Operacja, Double>("kwota"));
 
             tableFirmowe.setItems(data);
+        }
+        else if (konto.equals(E_KontoType.OSZCZEDNOSCIOWE_KONTO)){
+            final ObservableList<Operacja> data = FXCollections.observableArrayList();
+
+            ArrayList<Operacja> operacje = bankomatFacade.zwrocListeOperacji(konto);
+            data.addAll(operacje);
+
+            colOszczednoscioweData.setCellValueFactory(new PropertyValueFactory<Operacja, String>("data"));
+            colOszczednoscioweTyp.setCellValueFactory(new PropertyValueFactory<Operacja, String>("typ"));
+            colOszczednoscioweNadawca.setCellValueFactory(new PropertyValueFactory<Operacja, String>("nadawca"));
+            colOszczednoscioweOpis.setCellValueFactory(new PropertyValueFactory<Operacja, String>("opis"));
+            colOszczednoscioweKwota.setCellValueFactory(new PropertyValueFactory<Operacja, Double>("kwota"));
+
+            tableOszczednosciowe.setItems(data);
         }
     }
 
@@ -231,7 +281,50 @@ public class Controller {
         } else this.showAlertAboutInput();
     }
 
+    /*oszczednosiowe*/
 
+    public void onClickWykonajPrzelewZOszczednosciowego(){
+        if (inputOszczednosciowePrzelewKwota.getText().length() > 0) {
+            double kwota = Double.parseDouble(inputOszczednosciowePrzelewKwota.getText().replace(",", "."));
+            String odbiorca = inputOszczednosciowePrzelewOdbiorca.getText();
+            String opis = inputOszczednosciowePrzelewOpis.getText();
+            String data = "";
 
+            if (kwota > 0 && odbiorca.length() > 0) {
 
+                if(inputOszczednosciowePrzelewData.getValue()!=null){
+                    data = inputOszczednosciowePrzelewData.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                }else{
+                    data = Main.returnTodayDate();
+                }
+
+                bankomatFacade.zrobPrzelew(E_KontoType.OSZCZEDNOSCIOWE_KONTO, kwota, data, odbiorca, opis);
+                this.odswiezSaldoKonta(E_KontoType.OSZCZEDNOSCIOWE_KONTO);
+                this.odswiezOperacje(E_KontoType.OSZCZEDNOSCIOWE_KONTO);
+            } else this.showAlertAboutInput();
+        } else this.showAlertAboutInput();
+    }
+
+    public void onClickWplacZOszczednosciowego(){
+        if (inputOszczednoscioweWyplata.getText().length() > 0) {
+            double kwota = Double.parseDouble(inputOszczednoscioweWyplata.getText().replace(",", "."));
+            if (kwota > 0) {
+                bankomatFacade.wyplac(E_KontoType.OSZCZEDNOSCIOWE_KONTO, kwota);
+                this.odswiezSaldoKonta(E_KontoType.OSZCZEDNOSCIOWE_KONTO);
+                this.odswiezOperacje(E_KontoType.OSZCZEDNOSCIOWE_KONTO);
+            }
+        } else this.showAlertAboutInput();
+    }
+
+    public void onClickPrzelejNaOszczednosciowe(){
+        if (inputOszczednosciowePrzelewPrzychodzacy.getText().length() > 0) {
+            double kwota = Double.parseDouble(inputOszczednosciowePrzelewPrzychodzacy.getText().replace(",", "."));
+
+            if (kwota > 0) {
+                bankomatFacade.wplac(E_KontoType.OSZCZEDNOSCIOWE_KONTO, kwota);
+                this.odswiezSaldoKonta(E_KontoType.OSZCZEDNOSCIOWE_KONTO);
+                this.odswiezOperacje(E_KontoType.OSZCZEDNOSCIOWE_KONTO);
+            }
+        } else this.showAlertAboutInput();
+    }
 }
