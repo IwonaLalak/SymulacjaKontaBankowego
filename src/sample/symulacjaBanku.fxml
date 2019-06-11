@@ -28,20 +28,20 @@
                               <Font size="30.0" />
                            </font>
                         </Label>
-                        <Label layoutX="218.0" layoutY="28.0" text="00,00 zł">
+                        <Label layoutX="218.0" layoutY="28.0" text="00,00 zł"  fx:id="saldoOsobiste">
                            <font>
                               <Font size="30.0" />
                            </font>
                         </Label>
                         <ScrollPane layoutX="27.0" layoutY="76.0" prefHeight="244.0" prefWidth="1129.0">
                            <content>
-                              <TableView prefHeight="241.0" prefWidth="1109.0">
+                              <TableView prefHeight="241.0" prefWidth="1109.0" fx:id="tableOsobiste">
                                 <columns>
-                                  <TableColumn prefWidth="150.0" text="Data" />
-                                  <TableColumn minWidth="0.0" prefWidth="98.0" text="Typ" />
-                                    <TableColumn prefWidth="330.0" text="Odbiorca / Nadawca" />
-                                    <TableColumn prefWidth="381.0" text="Opis" />
-                                    <TableColumn prefWidth="149.0" text="Kwota" />
+                                  <TableColumn prefWidth="150.0" text="Data" fx:id="colOsobisteData"/>
+                                  <TableColumn minWidth="0.0" prefWidth="98.0" text="Typ"  fx:id="colOsobisteTyp"/>
+                                    <TableColumn prefWidth="330.0" text="Odbiorca / Nadawca"  fx:id="colOsobisteNadawca"/>
+                                    <TableColumn prefWidth="381.0" text="Opis"  fx:id="colOsobisteOpis"/>
+                                    <TableColumn prefWidth="149.0" text="Kwota"  fx:id="colOsobisteKwota"/>
                                 </columns>
                               </TableView>
                            </content>

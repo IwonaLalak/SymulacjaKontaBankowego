@@ -23,11 +23,11 @@ public class BankomatFacade implements BankomatFacadeInterface {
 
 
     @Override
-    public void wplac(String typKonta, double kwota) {
-        if(typKonta == "OSOBISTE"){
+    public void wplac(E_KontoType typKonta, double kwota) {
+        if(typKonta == E_KontoType.OSOBISTE_KONTO){
             kontoOsobiste.wplac(kwota);
         }
-        else if(typKonta == "FIRMOWE"){
+        else if(typKonta == E_KontoType.FIRMOWE_KONTO){
             kontoFirmowe.wplac(kwota);
         }
         else{
@@ -36,14 +36,14 @@ public class BankomatFacade implements BankomatFacadeInterface {
     }
 
     @Override
-    public void wyswietlInformacje(String typKonta) {
+    public void wyswietlInformacje(E_KontoType typKonta) {
 
         ArrayList<Operacja> operacje;
 
-        if(typKonta == "OSOBISTE"){
+        if(typKonta == E_KontoType.OSOBISTE_KONTO){
             operacje = kontoOsobiste.getListaOperacji();
         }
-        else if(typKonta == "FIRMOWE"){
+        else if(typKonta == E_KontoType.FIRMOWE_KONTO){
             operacje = kontoFirmowe.getListaOperacji();
         }
         else{
@@ -66,5 +66,36 @@ public class BankomatFacade implements BankomatFacadeInterface {
                 System.out.println(operacja.getData() + " " + operacja.getTyp() + " " + operacja.getOpis() + " " + operacja.getKwota());
             }*/
         }
+    }
+
+    @Override
+    public double zwrocSaldo(E_KontoType typKonta) {
+        if(typKonta == E_KontoType.OSOBISTE_KONTO){
+           return kontoOsobiste.getStanKonta();
+        }
+        else if(typKonta == E_KontoType.FIRMOWE_KONTO){
+           return kontoFirmowe.getStanKonta();
+        }
+        else{
+           return kontoOszczednosciowe.getStanKonta();
+        }
+    }
+
+    @Override
+    public ArrayList<Operacja> zwrocListeOperacji(E_KontoType typKonta) {
+
+        ArrayList<Operacja> operacje;
+
+        if(typKonta == E_KontoType.OSOBISTE_KONTO){
+            operacje = kontoOsobiste.getListaOperacji();
+        }
+        else if(typKonta == E_KontoType.FIRMOWE_KONTO){
+            operacje = kontoFirmowe.getListaOperacji();
+        }
+        else{
+            operacje = kontoOszczednosciowe.getListaOperacji();
+        }
+
+        return operacje;
     }
 }

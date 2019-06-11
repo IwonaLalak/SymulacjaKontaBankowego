@@ -29,7 +29,7 @@ abstract class AbstractKonto implements I_AbstractKonto{
    @Override
    public void wplac(double kwota){
        this.stanKonta = this.stanKonta + kwota;
-       this.dodajOperacje(kwota, "PRZYCHÓD", "Wpłata na konto");
+       this.dodajOperacje(kwota, "PRZYCHÓD","Przykładowa firma 3421 0340 0000 3842", "Wpłata na konto","2019-06-01");
    }
 
    @Override
@@ -39,7 +39,18 @@ abstract class AbstractKonto implements I_AbstractKonto{
        }
        else{
            this.stanKonta = this.stanKonta - kwota;
-           this.dodajOperacje(kwota, "OBCIĄŻENIE", "Wypłata z system");
+           this.dodajOperacje(kwota, "OBCIĄŻENIE","-", "Wypłata z system", "2019-06-01");
+       }
+   }
+
+   @Override
+   public void zrobPrzelew(double kwota, String data, String odbiorca, String opis){
+       if(this.stanKonta - kwota <0){
+           System.out.println("Nie można wykonać operacji - brak wystarczających środków na koncie");
+       }
+       else{
+           this.stanKonta = this.stanKonta - kwota;
+           this.dodajOperacje(kwota, "OBCIĄŻENIE",odbiorca, opis, data);
        }
    }
 
@@ -48,8 +59,8 @@ abstract class AbstractKonto implements I_AbstractKonto{
        return listaOperacji;
    }
 
-   void dodajOperacje(double kwota, String typ, String opis){
-       Operacja operacja = new Operacja("2019-05-01",typ,opis,kwota);
+   void dodajOperacje(double kwota, String typ, String nadawca,String opis, String data){
+       Operacja operacja = new Operacja(data,typ,nadawca,opis,kwota);
        this.listaOperacji.add(operacja);
    }
 

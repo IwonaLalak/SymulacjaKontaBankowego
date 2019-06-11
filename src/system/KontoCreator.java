@@ -24,7 +24,7 @@ class KontoCreator implements I_KontoCreator {
 
             case OSOBISTE_KONTO :
                 OsobisteKonto osobisteKonto = new OsobisteKonto();
-                osobisteKonto.setStanKonta(20.5);
+                osobisteKonto.setStanKonta(0);
                 konto = osobisteKonto;
                 break;
 
@@ -36,7 +36,7 @@ class KontoCreator implements I_KontoCreator {
 
             case OSZCZEDNOSCIOWE_KONTO:
                 OszczednoscioweKonto oszczednoscioweKonto = new OszczednoscioweKonto();
-                oszczednoscioweKonto.setStanKonta(1.0);
+                oszczednoscioweKonto.setStanKonta(0);
                 konto = oszczednoscioweKonto;
                 break;
             default:
